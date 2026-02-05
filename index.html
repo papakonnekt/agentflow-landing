@@ -99,6 +99,167 @@
             50% { box-shadow: 0 0 40px var(--accent-glow); }
         }
         
+        /* ========================================
+           PAGE PRELOADER & SMOOTH TRANSITIONS
+           ======================================== */
+        
+        .page-preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                        visibility 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .page-preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        
+        .preloader-logo {
+            width: 80px;
+            height: 80px;
+            position: relative;
+            margin-bottom: 32px;
+        }
+        
+        .preloader-logo svg {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .preloader-baton {
+            animation: preloader-baton-pass 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes preloader-baton-pass {
+            0%, 100% { transform: translateX(0); opacity: 1; }
+            50% { transform: translateX(20px); opacity: 0.7; }
+        }
+        
+        .preloader-pulse {
+            animation: preloader-pulse 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes preloader-pulse {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(0.8); opacity: 0.4; }
+        }
+        
+        .preloader-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+        
+        .preloader-dots {
+            display: inline-flex;
+            gap: 4px;
+            margin-left: 4px;
+        }
+        
+        .preloader-dots span {
+            animation: preloader-dot 1.4s ease-in-out infinite both;
+        }
+        
+        .preloader-dots span:nth-child(1) { animation-delay: 0s; }
+        .preloader-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .preloader-dots span:nth-child(3) { animation-delay: 0.4s; }
+        
+        @keyframes preloader-dot {
+            0%, 80%, 100% { transform: scale(0); opacity: 0; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+        
+        .preloader-progress {
+            width: 200px;
+            height: 3px;
+            background: var(--border);
+            border-radius: 100px;
+            margin-top: 24px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .preloader-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--coral));
+            border-radius: 100px;
+            width: 0%;
+            transition: width 0.3s ease;
+            position: relative;
+        }
+        
+        .preloader-progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 100px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: preloader-shimmer 1s infinite;
+        }
+        
+        @keyframes preloader-shimmer {
+            0% { transform: translateX(-100px); }
+            100% { transform: translateX(100px); }
+        }
+        
+        /* Smooth page content reveal */
+        body.page-loading {
+            overflow: hidden;
+        }
+        
+        body.page-loaded .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+        
+        body.page-loaded .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Button loading states */
+        .btn-loading {
+            position: relative;
+            pointer-events: none;
+            color: transparent !important;
+        }
+        
+        .btn-loading::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 50%;
+            left: 50%;
+            margin-left: -10px;
+            margin-top: -10px;
+            border: 2px solid transparent;
+            border-top-color: currentColor;
+            border-radius: 50%;
+            animation: btn-spinner 0.8s linear infinite;
+            color: white;
+        }
+        
+        @keyframes btn-spinner {
+            to { transform: rotate(360deg); }
+        }
+        
         @keyframes slide-up {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
@@ -3140,6 +3301,33 @@
     </style>
 </head>
 <body>
+    <!-- Page Preloader -->
+    <div class="page-preloader" id="pagePreloader">
+        <div class="preloader-logo">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="preloaderGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#d97706"/>
+                        <stop offset="100%" style="stop-color:#f97316"/>
+                    </linearGradient>
+                </defs>
+                <rect width="100" height="100" rx="24" fill="url(#preloaderGradient)"/>
+                <g class="preloader-baton">
+                    <path d="M28 50 L42 38 L42 46 L64 46 L64 54 L42 54 L42 62 Z" fill="white"/>
+                </g>
+                <circle cx="72" cy="50" r="6" fill="white" class="preloader-pulse"/>
+            </svg>
+        </div>
+        <div class="preloader-text">
+            RelayRun
+            <span class="preloader-dots">
+                <span>.</span><span>.</span><span>.</span>
+            </span>
+        </div>
+        <div class="preloader-progress">
+            <div class="preloader-progress-bar" id="preloaderProgress"></div>
+        </div>
+    </div>
 
 <!-- Custom Cursor -->
 <div class="cursor-dot"></div>
@@ -5398,6 +5586,118 @@
     } else {
         init3DTilt();
     }
+    
+    // ========================================
+    // PAGE PRELOADER & SMOOTH TRANSITIONS
+    // ========================================
+    
+    (function() {
+        const preloader = document.getElementById('pagePreloader');
+        const progressBar = document.getElementById('preloaderProgress');
+        const body = document.body;
+        
+        // Track loading progress
+        let progress = 0;
+        const images = document.querySelectorAll('img');
+        const totalResources = images.length + 3; // images + CSS + fonts + JS
+        let loadedResources = 0;
+        
+        function updateProgress() {
+            loadedResources++;
+            progress = Math.min((loadedResources / totalResources) * 100, 95);
+            if (progressBar) {
+                progressBar.style.width = progress + '%';
+            }
+        }
+        
+        // Monitor image loading
+        if (images.length > 0) {
+            images.forEach(img => {
+                if (img.complete) {
+                    updateProgress();
+                } else {
+                    img.addEventListener('load', updateProgress);
+                    img.addEventListener('error', updateProgress);
+                }
+            });
+        } else {
+            loadedResources += 2;
+        }
+        
+        // Simulate progress for fonts/CSS
+        setTimeout(updateProgress, 100);
+        setTimeout(updateProgress, 300);
+        setTimeout(updateProgress, 500);
+        
+        // Complete loading
+        function finishLoading() {
+            if (progressBar) {
+                progressBar.style.width = '100%';
+            }
+            
+            setTimeout(() => {
+                if (preloader) {
+                    preloader.classList.add('hidden');
+                }
+                body.classList.remove('page-loading');
+                body.classList.add('page-loaded');
+                
+                // Trigger scroll animations after load
+                setTimeout(() => {
+                    document.querySelectorAll('.animate-on-scroll').forEach(el => {
+                        el.style.opacity = '';
+                        el.style.transform = '';
+                    });
+                }, 100);
+            }, 400);
+        }
+        
+        // Minimum display time for preloader (ensures it's seen)
+        const minLoadTime = 1200;
+        const startTime = Date.now();
+        
+        window.addEventListener('load', () => {
+            const elapsed = Date.now() - startTime;
+            const remaining = Math.max(0, minLoadTime - elapsed);
+            
+            setTimeout(finishLoading, remaining);
+        });
+        
+        // Fallback: always finish after 3 seconds max
+        setTimeout(finishLoading, 3000);
+        
+        // Button loading states
+        document.querySelectorAll('.cta-primary, .cta-white, .pricing-cta').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                // Simulate loading state for demo
+                if (this.getAttribute('href') === '#' || !this.getAttribute('href')) {
+                    e.preventDefault();
+                    this.classList.add('btn-loading');
+                    
+                    setTimeout(() => {
+                        this.classList.remove('btn-loading');
+                    }, 2000);
+                }
+            });
+        });
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if (targetId !== '#') {
+                    e.preventDefault();
+                    const target = document.querySelector(targetId);
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+            });
+        });
+    })();
 </script>
 
 </body>

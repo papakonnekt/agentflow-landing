@@ -103,22 +103,74 @@
             overflow-x: hidden;
         }
         
+        /* Grain Texture Overlay */
+        .grain-overlay {
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            right: -50%;
+            bottom: -50%;
+            width: 200%;
+            height: 200%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            animation: grain 0.5s steps(10) infinite;
+        }
+        
+        @keyframes grain {
+            0%, 100% { transform: translate(0, 0); }
+            10% { transform: translate(-5%, -10%); }
+            20% { transform: translate(-15%, 5%); }
+            30% { transform: translate(7%, -25%); }
+            40% { transform: translate(-5%, 25%); }
+            50% { transform: translate(-15%, 10%); }
+            60% { transform: translate(15%, 0%); }
+            70% { transform: translate(0%, 15%); }
+            80% { transform: translate(3%, 35%); }
+            90% { transform: translate(-10%, 10%); }
+        }
+        
         .container { 
             max-width: 1200px; 
             margin: 0 auto; 
             padding: 0 24px;
         }
         
-        /* Navigation */
+        /* Navigation - Sticky Transforming */
         nav {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             z-index: 1000;
-            background: rgba(255,255,255,0.9);
+            background: rgba(255,255,255,0.8);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        /* Scrolled state - transforms nav */
+        nav.scrolled {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            border-bottom-color: var(--border-light);
+            box-shadow: 0 4px 30px rgba(13, 59, 59, 0.1);
+        }
+        
+        nav.scrolled .logo {
+            transform: scale(0.9);
+        }
+        
+        nav.scrolled .logo-icon {
+            width: 34px;
+            height: 34px;
+        }
+        
+        nav.scrolled .nav-cta {
+            padding: 8px 16px;
+            font-size: 0.9rem;
         }
         
         nav .container {
@@ -126,6 +178,111 @@
             justify-content: space-between;
             align-items: center;
             height: 72px;
+            transition: height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        nav.scrolled .container {
+            height: 56px;
+        }
+        
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: -0.02em;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo-icon {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--coral) 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 4px 15px var(--accent-glow);
+            animation: pulse-glow 3s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .logo-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: none;
+            stroke: white;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: all 0.3s ease;
+        }
+        
+        nav.scrolled .logo-icon svg {
+            width: 22px;
+            height: 22px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+            position: relative;
+        }
+        
+        .nav-links a:hover { color: var(--accent); }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .nav-cta {
+            background: var(--primary);
+            color: white !important;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid var(--primary);
+        }
+        
+        .nav-cta:hover { 
+            background: var(--primary-light); 
+            border-color: var(--primary-light);
+        }
+        
+        .nav-cta::after { display: none !important; }
+        
+        /* Hide nav on scroll down, show on scroll up */
+        nav.hidden {
+            transform: translateY(-100%);
         }
         
         .logo {
@@ -460,6 +617,85 @@
             margin-left: -80px;
             transform: perspective(1000px) rotateY(-5deg) rotateX(2deg);
             animation: float 6s ease-in-out infinite;
+        }
+
+        /* Custom Hero Illustration */
+        .hero-illustration {
+            width: 100%;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .relay-svg {
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 20px 60px rgba(13, 59, 59, 0.2));
+        }
+
+        /* Animated elements within illustration */
+        .relay-baton {
+            animation: baton-pass 3s ease-in-out infinite;
+        }
+
+        @keyframes baton-pass {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(20px); }
+        }
+
+        .data-particle {
+            animation: data-flow 2s linear infinite;
+        }
+
+        .data-particle:nth-child(2) { animation-delay: 0.5s; }
+        .data-particle:nth-child(3) { animation-delay: 1s; }
+        .data-particle:nth-child(4) { animation-delay: 1.5s; }
+
+        @keyframes data-flow {
+            0% { opacity: 0; transform: translateX(-10px) scale(0.5); }
+            50% { opacity: 1; transform: translateX(0) scale(1); }
+            100% { opacity: 0; transform: translateX(10px) scale(0.5); }
+        }
+
+        .gear-spin {
+            animation: spin 8s linear infinite;
+            transform-origin: center;
+        }
+
+        .gear-spin-reverse {
+            animation: spin-reverse 6s linear infinite;
+            transform-origin: center;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes spin-reverse {
+            from { transform: rotate(360deg); }
+            to { transform: rotate(0deg); }
+        }
+
+        .pulse-ring {
+            animation: pulse-ring 2s ease-out infinite;
+            transform-origin: center;
+        }
+
+        @keyframes pulse-ring {
+            0% { transform: scale(1); opacity: 0.6; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+
+        .float-element {
+            animation: float-element 4s ease-in-out infinite;
+        }
+
+        .float-element:nth-child(2) { animation-delay: 1s; }
+        .float-element:nth-child(3) { animation-delay: 2s; }
+
+        @keyframes float-element {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
         }
         
         .dashboard-preview {
@@ -1570,6 +1806,10 @@
                 margin: 0 auto;
             }
             
+            .hero-illustration {
+                max-width: 100%;
+            }
+            
             .hero-accent-shape {
                 opacity: 0.2;
             }
@@ -1691,6 +1931,9 @@
 </head>
 <body>
 
+<!-- Film Grain Texture Overlay -->
+<div class="grain-overlay"></div>
+
 <!-- Navigation -->
 <nav>
     <div class="container">
@@ -1739,42 +1982,118 @@
                 </div>
             </div>
             <div class="hero-visual">
-                <div class="dashboard-preview">
-                    <div class="dashboard-header">
-                        <div class="dot dot-red"></div>
-                        <div class="dot dot-yellow"></div>
-                        <div class="dot dot-green"></div>
-                        <span class="dashboard-title">RelayRun Dashboard</span>
-                    </div>
-                    <div class="metric-cards">
-                        <div class="metric-card">
-                            <div class="metric-label">Leads Captured</div>
-                            <div class="metric-value">247</div>
-                            <div class="metric-change">↑ 34% this month</div>
-                        </div>
-                        <div class="metric-card">
-                            <div class="metric-label">Response Time</div>
-                            <div class="metric-value">&lt;1s</div>
-                            <div class="metric-change">↓ 99% faster</div>
-                        </div>
-                    </div>
-                    <div class="activity-feed">
-                        <div class="activity-item">
-                            <div class="activity-icon lead">👋</div>
-                            <span class="activity-text">New lead: Sarah M. (HVAC inquiry)</span>
-                            <span class="activity-time">Now</span>
-                        </div>
-                        <div class="activity-item">
-                            <div class="activity-icon booking">📅</div>
-                            <span class="activity-text">Appointment booked: Tue 2PM</span>
-                            <span class="activity-time">2m ago</span>
-                        </div>
-                        <div class="activity-item">
-                            <div class="activity-icon review">⭐</div>
-                            <span class="activity-text">5-star review received</span>
-                            <span class="activity-time">5m ago</span>
-                        </div>
-                    </div>
+                <div class="hero-illustration">
+                    <svg class="relay-svg" viewBox="0 0 600 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <!-- Gradients -->
+                            <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#0d3b3b"/>
+                                <stop offset="100%" style="stop-color:#1a5252"/>
+                            </linearGradient>
+                            <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#d97706"/>
+                                <stop offset="100%" style="stop-color:#f97316"/>
+                            </linearGradient>
+                            <linearGradient id="grad3" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:#d97706;stop-opacity:0.3"/>
+                                <stop offset="100%" style="stop-color:#f97316;stop-opacity:0.1"/>
+                            </linearGradient>
+                            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                                <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                                <feMerge>
+                                    <feMergeNode in="coloredBlur"/>
+                                    <feMergeNode in="SourceGraphic"/>
+                                </feMerge>
+                            </filter>
+                        </defs>
+
+                        <!-- Background grid pattern -->
+                        <rect width="600" height="500" fill="#fafaf9"/>
+                        
+                        <!-- Connection lines (automation flow) -->
+                        <path d="M100 250 Q200 200 300 250 T500 250" stroke="url(#grad3)" stroke-width="3" fill="none" stroke-dasharray="8 4"/>
+                        <path d="M80 300 Q180 250 280 300 T480 300" stroke="url(#grad3)" stroke-width="2" fill="none" stroke-dasharray="6 6"/>
+                        
+                        <!-- Left node: Business Owner -->
+                        <g class="float-element">
+                            <circle cx="100" cy="200" r="50" fill="url(#grad1)" filter="url(#glow)"/>
+                            <text x="100" y="205" text-anchor="middle" fill="white" font-family="Space Grotesk" font-size="28" font-weight="600">🏢</text>
+                            <text x="100" y="280" text-anchor="middle" fill="#0d3b3b" font-family="Space Grotesk" font-size="12" font-weight="600">Your Business</text>
+                        </g>
+
+                        <!-- Center: RelayRun AI Hub -->
+                        <g>
+                            <!-- Outer pulse rings -->
+                            <circle cx="300" cy="250" r="70" fill="none" stroke="url(#grad2)" stroke-width="2" class="pulse-ring"/>
+                            <circle cx="300" cy="250" r="85" fill="none" stroke="url(#grad2)" stroke-width="1" class="pulse-ring" style="animation-delay: 0.5s"/>
+                            
+                            <!-- Main hub circle -->
+                            <circle cx="300" cy="250" r="55" fill="white" stroke="url(#grad2)" stroke-width="3"/>
+                            <circle cx="300" cy="250" r="45" fill="url(#grad2)"/>
+                            
+                            <!-- Relay baton icon -->
+                            <g class="relay-baton">
+                                <path d="M280 250 L295 235 L295 245 L320 245 L320 255 L295 255 L295 265 Z" fill="white"/>
+                            </g>
+                            
+                            <!-- Rotating gear decorations -->
+                            <g class="gear-spin" transform="translate(300, 250)">
+                                <path d="M-60 -10 L-55 -10 L-52 -20 L-48 -20 L-45 -10 L-40 -10 L-40 -5 L-30 -2 L-30 2 L-40 5 L-40 10 L-45 10 L-48 20 L-52 20 L-55 10 L-60 10 Z" fill="#d97706" opacity="0.3"/>
+                            </g>
+                            <g class="gear-spin-reverse" transform="translate(300, 250)">
+                                <path d="M60 -8 L55 -8 L52 -16 L48 -16 L45 -8 L40 -8 L-40 8 L-45 8 L-48 16 L-52 16 L-55 8 L-60 8 Z" fill="#f97316" opacity="0.2"/>
+                            </g>
+                        </g>
+
+                        <!-- Right node: Customer -->
+                        <g class="float-element">
+                            <circle cx="500" cy="200" r="45" fill="white" stroke="#0d3b3b" stroke-width="2"/>
+                            <text x="500" y="205" text-anchor="middle" fill="#0d3b3b" font-family="Space Grotesk" font-size="24">👤</text>
+                            <text x="500" y="270" text-anchor="middle" fill="#0d3b3b" font-family="Space Grotesk" font-size="12" font-weight="600">Happy Customer</text>
+                        </g>
+
+                        <!-- Bottom: Automation outputs -->
+                        <g class="float-element">
+                            <rect x="180" y="350" width="100" height="70" rx="12" fill="white" stroke="#e7e5e4" stroke-width="1"/>
+                            <rect x="190" y="365" width="60" height="8" rx="4" fill="#0d3b3b"/>
+                            <rect x="190" y="378" width="40" height="6" rx="3" fill="#d97706"/>
+                            <rect x="190" y="388" width="50" height="6" rx="3" fill="#9ca3af"/>
+                            <circle cx="260" cy="395" r="12" fill="#d1fae5"/>
+                            <text x="260" y="399" text-anchor="middle" fill="#059669" font-size="10" font-weight="700">✓</text>
+                        </g>
+
+                        <g class="float-element">
+                            <rect x="320" y="360" width="100" height="70" rx="12" fill="white" stroke="#e7e5e4" stroke-width="1"/>
+                            <rect x="330" y="375" width="50" height="8" rx="4" fill="#0d3b3b"/>
+                            <rect x="330" y="388" width="70" height="6" rx="3" fill="#fbbf24"/>
+                            <circle cx="400" cy="400" r="12" fill="#dbeafe"/>
+                            <text x="400" y="404" text-anchor="middle" fill="#3b82f6" font-size="10" font-weight="700">★</text>
+                        </g>
+
+                        <!-- Data particles flowing -->
+                        <g class="data-particles">
+                            <circle cx="200" cy="230" r="4" fill="#d97706" class="data-particle"/>
+                            <circle cx="220" cy="240" r="3" fill="#f97316" class="data-particle"/>
+                            <circle cx="380" cy="240" r="4" fill="#d97706" class="data-particle"/>
+                            <circle cx="400" cy="230" r="3" fill="#f97316" class="data-particle"/>
+                        </g>
+
+                        <!-- Status indicators -->
+                        <g transform="translate(520, 320)">
+                            <circle cx="0" cy="0" r="18" fill="#d1fae5"/>
+                            <text x="0" y="4" text-anchor="middle" fill="#059669" font-family="Space Grotesk" font-size="14" font-weight="700">24/7</text>
+                        </g>
+
+                        <g transform="translate(80, 320)">
+                            <circle cx="0" cy="0" r="18" fill="#dbeafe"/>
+                            <text x="0" y="4" text-anchor="middle" fill="#3b82f6" font-family="Space Grotesk" font-size="14" font-weight="700">&lt;1s</text>
+                        </g>
+
+                        <!-- Decorative elements -->
+                        <circle cx="50" cy="400" r="30" fill="url(#grad2)" opacity="0.1"/>
+                        <circle cx="550" cy="100" r="25" fill="url(#grad1)" opacity="0.1"/>
+                        <circle cx="450" cy="450" r="20" fill="url(#grad2)" opacity="0.15"/>
+                    </svg>
                 </div>
             </div>
         </div>
@@ -2238,21 +2557,46 @@
         });
     });
 
-    // Navbar scroll effect
+    // Navbar scroll transformation effect
     const nav = document.querySelector('nav');
     let lastScroll = 0;
-
-    window.addEventListener('scroll', () => {
+    let ticking = false;
+    const scrollThreshold = 50;
+    
+    function updateNav() {
         const currentScroll = window.pageYOffset;
         
-        if (currentScroll > 100) {
-            nav.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1)';
+        // Add/remove scrolled class for transformation
+        if (currentScroll > scrollThreshold) {
+            nav.classList.add('scrolled');
         } else {
-            nav.style.boxShadow = 'none';
+            nav.classList.remove('scrolled');
+        }
+        
+        // Hide on scroll down, show on scroll up (after scrolling past hero)
+        if (currentScroll > 400) {
+            if (currentScroll > lastScroll) {
+                // Scrolling down - hide nav
+                nav.classList.add('hidden');
+            } else {
+                // Scrolling up - show nav
+                nav.classList.remove('hidden');
+            }
+        } else {
+            // Always show when near top
+            nav.classList.remove('hidden');
         }
         
         lastScroll = currentScroll;
-    });
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            window.requestAnimationFrame(updateNav);
+            ticking = true;
+        }
+    }, { passive: true });
 </script>
 
 </body>

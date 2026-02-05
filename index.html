@@ -69,6 +69,16 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        
+        @keyframes marquee-reverse {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
+        }
+        
         @keyframes typewriter {
             from { width: 0; }
             to { width: 100%; }
@@ -207,11 +217,69 @@
         
         .hero-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 0;
             align-items: center;
             position: relative;
             z-index: 1;
+            min-height: 70vh;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding-right: 0;
+        }
+        
+        .hero-visual {
+            position: relative;
+            z-index: 1;
+            margin-left: -80px;
+            transform: perspective(1000px) rotateY(-5deg) rotateX(2deg);
+        }
+        
+        /* Floating accent shapes */
+        .hero-accent-shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.4;
+            pointer-events: none;
+        }
+        
+        .hero-accent-1 {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, var(--accent), var(--coral));
+            top: -100px;
+            right: 10%;
+            animation: float-slow 8s ease-in-out infinite;
+        }
+        
+        .hero-accent-2 {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary-light), var(--accent));
+            bottom: 10%;
+            left: -50px;
+            animation: float-slow 10s ease-in-out infinite reverse;
+        }
+        
+        @keyframes float-slow {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-30px) scale(1.1); }
+        }
+        
+        /* Diagonal divider */
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 150px;
+            background: linear-gradient(135deg, var(--bg) 50%, transparent 50%);
+            z-index: 0;
         }
         
         .hero-badge {
@@ -388,21 +456,45 @@
         /* Hero Visual */
         .hero-visual {
             position: relative;
+            z-index: 1;
+            margin-left: -80px;
+            transform: perspective(1000px) rotateY(-5deg) rotateX(2deg);
             animation: float 6s ease-in-out infinite;
         }
         
         .dashboard-preview {
             background: white;
             border-radius: 20px;
-            box-shadow: var(--shadow-xl), 0 0 60px rgba(217, 119, 6, 0.1);
+            box-shadow: 
+                var(--shadow-xl), 
+                0 0 60px rgba(217, 119, 6, 0.1),
+                20px 20px 60px rgba(0,0,0,0.1);
             padding: 24px;
             border: 1px solid var(--border);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        
+        /* Decorative corner accent */
+        .dashboard-preview::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent), var(--coral));
+            border-radius: 16px;
+            z-index: -1;
+            opacity: 0.8;
         }
         
         .dashboard-preview:hover {
-            transform: translateY(-5px) rotateX(2deg);
-            box-shadow: var(--shadow-xl), 0 0 80px rgba(217, 119, 6, 0.2);
+            transform: translateY(-5px) perspective(1000px) rotateY(-3deg) rotateX(1deg);
+            box-shadow: 
+                var(--shadow-xl), 
+                0 0 80px rgba(217, 119, 6, 0.2),
+                30px 30px 80px rgba(0,0,0,0.15);
         }
         
         .dashboard-header {
@@ -534,6 +626,81 @@
         }
         
         .trust-logo:hover { opacity: 1; }
+        
+        /* Marquee Section */
+        .marquee-section {
+            padding: 60px 0;
+            background: var(--primary);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .marquee-row {
+            display: flex;
+            width: fit-content;
+            animation: marquee 30s linear infinite;
+        }
+        
+        .marquee-row.reverse {
+            animation: marquee-reverse 35s linear infinite;
+            margin-top: 20px;
+        }
+        
+        .marquee-row:hover {
+            animation-play-state: paused;
+        }
+        
+        .marquee-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 20px 40px;
+            margin: 0 20px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+        
+        .marquee-item:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: var(--accent);
+            transform: scale(1.05);
+        }
+        
+        .marquee-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--accent), var(--coral));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+        
+        .marquee-text {
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        
+        .marquee-text span {
+            color: var(--accent-secondary);
+            font-weight: 700;
+        }
+        
+        .marquee-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            margin: 0 30px;
+            flex-shrink: 0;
+            opacity: 0.6;
+        }
         
         /* Problem Section */
         .problem {
@@ -1385,7 +1552,28 @@
         
         /* Mobile Responsive */
         @media (max-width: 968px) {
-            .hero-grid,
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                min-height: auto;
+            }
+            
+            .hero-content {
+                padding-right: 0;
+                text-align: center;
+            }
+            
+            .hero-visual {
+                margin-left: 0;
+                transform: perspective(1000px) rotateY(0) rotateX(2deg);
+                max-width: 500px;
+                margin: 0 auto;
+            }
+            
+            .hero-accent-shape {
+                opacity: 0.2;
+            }
+            
             .testimonial-grid {
                 grid-template-columns: 1fr;
             }
@@ -1403,6 +1591,21 @@
             
             .bento-featured {
                 grid-row: span 1;
+            }
+            
+            /* Marquee Mobile */
+            .marquee-item {
+                padding: 16px 24px;
+            }
+            
+            .marquee-text {
+                font-size: 0.95rem;
+            }
+            
+            .marquee-icon {
+                width: 36px;
+                height: 36px;
+                font-size: 1rem;
             }
             
             .problem-grid,
@@ -1514,6 +1717,8 @@
 
 <!-- Hero -->
 <section class="hero">
+    <div class="hero-accent-shape hero-accent-1"></div>
+    <div class="hero-accent-shape hero-accent-2"></div>
     <div class="container">
         <div class="hero-grid">
             <div class="hero-content">
@@ -1587,6 +1792,116 @@
             <span class="trust-logo">PlumbRight</span>
             <span class="trust-logo">LawnMaster</span>
         </div>
+    </div>
+</section>
+
+<!-- Marquee Social Proof -->
+<section class="marquee-section">
+    <div class="marquee-row">
+        <div class="marquee-item">
+            <div class="marquee-icon">⚡</div>
+            <span class="marquee-text"><span>247</span> leads captured this month</span>
+        </div>
+        <div class="marquee-dot"></div>
+        <div class="marquee-item">
+            <div class="marquee-icon">📞</div>
+            <span class="marquee-text"><span>99%</span> faster response time</span>
+        </div>
+        <div class="marquee-dot"></div>
+        <div class="marquee-item">
+            <div class="marquee-icon">⭐</div>
+            <span class="marquee-text"><span>4.9/5</span> average rating boost</span>
+        </div>
+        <div class="marquee-dot"></div>
+        <div class="marquee-item">
+            <div class="marquee-icon">💰</div>
+            <span class="marquee-text"><span>$50K+</span> revenue recovered</span>
+        </div>
+        <div class="marquee-dot"></div>
+        <div class="marquee-item">
+            <div class="marquee-icon">🎯</div>
+            <span class="marquee-text"><span>40%</span> more bookings</span>
+        </div>
+        <div class="marquee-dot"></div>
+        <!-- Duplicate for seamless loop -->
+        <div class="marquee-item">
+            <div class="marquee-icon">⚡</div>
+            <span class="marquee-text"><span>247</span> leads captured this month</span>
+        </div>
+        <div class="marquee-dot"></div>
+        <div class="marquee-item">
+            <div class="marquee-icon">📞</div>
+            <span class="marquee-text"><span>99%</span> faster response time</span>
+        </div>
+        <div class="marquee-dot"></div>
+        <div class="marquee-item">
+            <div class="marquee-icon">⭐</div>
+            <span class="marquee-text"><span>4.9/5</span> average rating boost</span>
+        </div>
+        <div class="marquee-dot"></div>
+        <div class="marquee-item">
+            <div class="marquee-icon">💰</div>
+            <span class="marquee-text"><span>$50K+</span> revenue recovered</span>
+        </div>
+        <div class="marquee-dot"></div>
+        <div class="marquee-item">
+            <div class="marquee-icon">🎯</div>
+            <span class="marquee-text"><span>40%</span> more bookings</span>
+        </div>
+        <div class="marquee-dot"></div>
+    </div>
+    <div class="marquee-row reverse">
+        <div class="marquee-item">
+            <div class="marquee-icon">🏆</div>
+            <span class="marquee-text">"Best investment we've made"</span>
+        </div>
+        <div class="marquee-dot"></div>
+        <div class="marquee-item">
+            <div class="marquee-icon">🚀</div>
+            <span class="marquee-text">Closed <span>8 jobs</span> first month</span>
+        </div>
+        <div class="marquee-dot"></div>
+        <div class="marquee-item">
+            <div class="marquee-icon">⏰</div>
+            <span class="marquee-text"><span>60%</span> less admin time</span>
+        </div>
+        <div class="marquee-dot"></div>
+        <div class="marquee-item">
+            <div class="marquee-icon">🤖</div>
+            <span class="marquee-text">AI works <span>24/7</span> for you</span>
+        </div>
+        <div class="marquee-dot"></div>
+        <div class="marquee-item">
+            <div class="marquee-icon">📈</div>
+            <span class="marquee-text"><span>3-4x</span> more reviews</span>
+        </div>
+        <div class="marquee-dot"></div>
+        <!-- Duplicate for seamless loop -->
+        <div class="marquee-item">
+            <div class="marquee-icon">🏆</div>
+            <span class="marquee-text">"Best investment we've made"</span>
+        </div>
+        <div class="marquee-dot"></div>
+        <div class="marquee-item">
+            <div class="marquee-icon">🚀</div>
+            <span class="marquee-text">Closed <span>8 jobs</span> first month</span>
+        </div>
+        <div class="marquee-dot"></div>
+        <div class="marquee-item">
+            <div class="marquee-icon">⏰</div>
+            <span class="marquee-text"><span>60%</span> less admin time</span>
+        </div>
+        <div class="marquee-dot"></div>
+        <div class="marquee-item">
+            <div class="marquee-icon">🤖</div>
+            <span class="marquee-text">AI works <span>24/7</span> for you</span>
+        </div>
+        <div class="marquee-dot"></div>
+        <div class="marquee-item">
+            <div class="marquee-icon">📈</div>
+            <span class="marquee-text"><span>3-4x</span> more reviews</span>
+        </div>
+        <div class="marquee-dot"></div>
     </div>
 </section>
 

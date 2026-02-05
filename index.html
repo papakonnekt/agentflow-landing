@@ -3,30 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AgentFlow Automation — Your Business, Running Itself</title>
+    <title>RelayRun — Your Business, Running Itself</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #0f172a;
-            --primary-light: #1e293b;
-            --accent: #6366f1;
-            --accent-hover: #4f46e5;
-            --accent-secondary: #ec4899;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --text: #334155;
-            --text-light: #64748b;
-            --bg: #ffffff;
-            --bg-soft: #f8fafc;
-            --bg-warm: #fefce8;
-            --border: #e2e8f0;
+            /* Primary: Deep Teal/Slate - sophisticated, trustworthy */
+            --primary: #0d3b3b;
+            --primary-light: #1a5252;
+            --primary-dark: #082828;
+            /* Accent: Warm Amber/Gold - energetic, approachable */
+            --accent: #d97706;
+            --accent-hover: #b45309;
+            --accent-secondary: #f59e0b;
+            --accent-glow: rgba(217, 119, 6, 0.4);
+            /* Secondary: Coral/Salmon for variety */
+            --coral: #f97316;
+            --coral-light: #fb923c;
+            /* Neutrals: Warm gray instead of cold slate */
+            --success: #059669;
+            --warning: #d97706;
+            --text: #374151;
+            --text-light: #6b7280;
+            --text-muted: #9ca3af;
+            /* Backgrounds: Subtle warmth */
+            --bg: #fafaf9;
+            --bg-soft: #f5f5f4;
+            --bg-warm: #fffbeb;
+            --bg-card: #ffffff;
+            /* Borders: Softer */
+            --border: #e7e5e4;
+            --border-light: #f5f5f4;
+            /* Shadows: Warmer tone */
             --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.08);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.08);
             --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
-            --glow: 0 0 40px rgba(99, 102, 241, 0.3);
+            --glow: 0 0 40px var(--accent-glow);
+            --glow-strong: 0 0 60px rgba(217, 119, 6, 0.5);
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -44,8 +59,8 @@
         }
         
         @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.4); }
-            50% { box-shadow: 0 0 40px rgba(99, 102, 241, 0.6); }
+            0%, 100% { box-shadow: 0 0 20px var(--accent-glow); }
+            50% { box-shadow: 0 0 40px var(--accent-glow); }
         }
         
         @keyframes slide-up {
@@ -116,16 +131,26 @@
         .logo-icon {
             width: 36px;
             height: 36px;
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 100%);
+            background: linear-gradient(135deg, var(--accent) 0%, var(--coral) 100%);
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 1.1rem;
-            font-weight: 800;
-            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+            box-shadow: 0 4px 15px var(--accent-glow);
             animation: pulse-glow 3s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: white;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
         
         .nav-links {
@@ -158,9 +183,9 @@
         .hero {
             padding: 140px 0 100px;
             background: 
-                radial-gradient(ellipse at 20% 50%, rgba(99,102,241,0.12) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 20%, rgba(236,72,153,0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 100%, rgba(99,102,241,0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 20% 50%, rgba(217, 119, 6, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(249, 115, 22, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 100%, rgba(217, 119, 6, 0.06) 0%, transparent 50%),
                 var(--bg);
             position: relative;
             overflow: hidden;
@@ -173,7 +198,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%236366f1' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23d97706' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
             opacity: 0.6;
             animation: float 20s ease-in-out infinite;
         }
@@ -215,7 +240,7 @@
         }
         
         .hero h1 span {
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 50%, var(--accent) 100%);
+            background: linear-gradient(135deg, var(--accent) 0%, var(--coral) 50%, var(--accent) 100%);
             background-size: 200% 200%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -240,7 +265,7 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 100%);
+            background: linear-gradient(135deg, var(--accent) 0%, var(--coral) 100%);
             color: white;
             padding: 16px 32px;
             border-radius: 12px;
@@ -309,7 +334,7 @@
             border-radius: 50%;
             border: 3px solid white;
             margin-left: -10px;
-            background: linear-gradient(135deg, var(--accent), #8b5cf6);
+            background: linear-gradient(135deg, var(--accent), var(--coral));
             display: flex;
             align-items: center;
             justify-content: center;
@@ -339,7 +364,7 @@
         .dashboard-preview {
             background: white;
             border-radius: 20px;
-            box-shadow: var(--shadow-xl), 0 0 60px rgba(99, 102, 241, 0.1);
+            box-shadow: var(--shadow-xl), 0 0 60px rgba(217, 119, 6, 0.1);
             padding: 24px;
             border: 1px solid var(--border);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -347,7 +372,7 @@
         
         .dashboard-preview:hover {
             transform: translateY(-5px) rotateX(2deg);
-            box-shadow: var(--shadow-xl), 0 0 80px rgba(99, 102, 241, 0.2);
+            box-shadow: var(--shadow-xl), 0 0 80px rgba(217, 119, 6, 0.2);
         }
         
         .dashboard-header {
@@ -591,7 +616,7 @@
             left: 0;
             right: 0;
             height: 4px;
-            background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+            background: linear-gradient(90deg, var(--accent), var(--coral));
             transform: scaleX(0);
             transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
@@ -602,7 +627,7 @@
         
         .solution-card:hover {
             transform: translateY(-8px) scale(1.02);
-            box-shadow: var(--shadow-xl), 0 20px 40px rgba(99, 102, 241, 0.15);
+            box-shadow: var(--shadow-xl), 0 20px 40px rgba(217, 119, 6, 0.15);
         }
         
         .solution-card.featured {
@@ -631,7 +656,7 @@
         .solution-icon {
             width: 56px;
             height: 56px;
-            background: linear-gradient(135deg, var(--accent), #8b5cf6);
+            background: linear-gradient(135deg, var(--accent), var(--coral));
             border-radius: 16px;
             display: flex;
             align-items: center;
@@ -689,8 +714,8 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle at 30% 30%, rgba(59,130,246,0.15) 0%, transparent 50%),
-                        radial-gradient(circle at 70% 70%, rgba(139,92,246,0.1) 0%, transparent 50%);
+            background: radial-gradient(circle at 30% 30%, rgba(217, 119, 6, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 70%, rgba(249, 115, 22, 0.1) 0%, transparent 50%);
             animation: pulse 10s ease-in-out infinite;
         }
         
@@ -715,7 +740,7 @@
             font-family: 'Playfair Display', serif;
             font-size: 4rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #fff, #94a3b8);
+            background: linear-gradient(135deg, #fff, var(--accent-secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -747,7 +772,7 @@
             left: 20%;
             right: 20%;
             height: 2px;
-            background: linear-gradient(90deg, var(--accent), #8b5cf6);
+            background: linear-gradient(90deg, var(--accent), var(--coral));
             opacity: 0.3;
         }
         
@@ -759,7 +784,7 @@
         .step-number {
             width: 80px;
             height: 80px;
-            background: linear-gradient(135deg, var(--accent), #8b5cf6);
+            background: linear-gradient(135deg, var(--accent), var(--coral));
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -770,7 +795,7 @@
             margin: 0 auto 24px;
             position: relative;
             z-index: 1;
-            box-shadow: 0 10px 30px rgba(59,130,246,0.3);
+            box-shadow: 0 10px 30px var(--accent-glow);
         }
         
         .step h3 {
@@ -826,7 +851,7 @@
             top: -12px;
             left: 50%;
             transform: translateX(-50%);
-            background: linear-gradient(135deg, var(--accent), #8b5cf6);
+            background: linear-gradient(135deg, var(--accent), var(--coral));
             color: white;
             padding: 8px 20px;
             border-radius: 100px;
@@ -978,7 +1003,7 @@
             width: 48px;
             height: 48px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent), #8b5cf6);
+            background: linear-gradient(135deg, var(--accent), var(--coral));
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1000,7 +1025,7 @@
         /* CTA Section */
         .cta-section {
             padding: 100px 0;
-            background: linear-gradient(135deg, var(--accent), #8b5cf6);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
             color: white;
             text-align: center;
             position: relative;
@@ -1214,8 +1239,11 @@
 <nav>
     <div class="container">
         <a href="#" class="logo">
-            <div class="logo-icon">A</div>
-            AgentFlow
+            <div class="logo-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+            </div>
         </a>
         <div class="nav-links">
             <a href="#problem">Problems</a>
@@ -1231,7 +1259,7 @@
     <div class="container">
         <div class="hero-grid">
             <div class="hero-content">
-                <div class="hero-badge">Now Serving Lancaster & Harrisburg PA</div>
+                <div class="hero-badge">AI Automation for Service Businesses</div>
                 <h1>Your Business, <span>Running Itself</span></h1>
                 <p class="hero-description">AI automation systems that respond to customers 24/7, book appointments automatically, and handle follow-ups—so you can focus on delivering great service while we handle the busywork.</p>
                 <div class="hero-cta-group">
@@ -1253,7 +1281,7 @@
                         <div class="dot dot-red"></div>
                         <div class="dot dot-yellow"></div>
                         <div class="dot dot-green"></div>
-                        <span class="dashboard-title">AgentFlow Dashboard</span>
+                        <span class="dashboard-title">RelayRun Dashboard</span>
                     </div>
                     <div class="metric-cards">
                         <div class="metric-card">
@@ -1519,7 +1547,7 @@
     <div class="container">
         <h2>Ready to Automate Your Business?</h2>
         <p>Book your free 15-minute Automation Audit. We'll identify your top 3 automation opportunities—no pitch, just insights you can use.</p>
-        <a href="https://calendly.com/agentflow-automation/audit" class="cta-white">Book Your Free Audit →</a>
+        <a href="https://calendly.com/relayrun/audit" class="cta-white">Book Your Free Audit →</a>
     </div>
 </section>
 
@@ -1529,8 +1557,12 @@
         <div class="footer-grid">
             <div class="footer-brand">
                 <a href="#" class="logo">
-                    <div class="logo-icon">A</div>
-                    AgentFlow
+                    <div class="logo-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    RelayRun
                 </a>
                 <p>AI automation systems for service businesses. We build intelligent workflows that save you time and make you money.</p>
             </div>
@@ -1555,13 +1587,13 @@
             <div class="footer-column">
                 <h4>Contact</h4>
                 <ul>
-                    <li><a href="mailto:hello@agentflowautomation.com">hello@agentflowautomation.com</a></li>
+                    <li><a href="mailto:hello@relayrun.io">hello@relayrun.io</a></li>
                     <li><a href="#audit">Book a Call</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2025 AgentFlow Automation. Built by AI agents, for human businesses.</p>
+            <p>&copy; 2025 RelayRun. Built by AI agents, for human businesses.</p>
             <p>Serving Lancaster, Harrisburg & York PA</p>
         </div>
     </div>

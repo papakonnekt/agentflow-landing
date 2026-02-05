@@ -2456,6 +2456,420 @@
                 font-size: 2rem;
             }
         }
+        /* ========================================
+           HORIZONTAL SCROLL CASE STUDIES
+           ======================================== */
+
+        .case-studies-section {
+            position: relative;
+            background: var(--bg-soft);
+            overflow: hidden;
+        }
+
+        .case-studies-header {
+            padding: 80px 0 40px;
+            text-align: center;
+        }
+
+        .case-studies-container {
+            position: relative;
+            height: 100vh;
+            min-height: 700px;
+        }
+
+        .case-studies-track {
+            display: flex;
+            gap: 40px;
+            padding: 0 calc((100vw - 1200px) / 2);
+            height: 100%;
+            overflow-x: auto;
+            overflow-y: hidden;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            align-items: center;
+        }
+
+        .case-studies-track::-webkit-scrollbar {
+            display: none;
+        }
+
+        .case-study-card {
+            flex: 0 0 80vw;
+            max-width: 1000px;
+            height: 70vh;
+            min-height: 500px;
+            background: var(--bg-card);
+            border-radius: 32px;
+            overflow: hidden;
+            scroll-snap-align: center;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            box-shadow: 
+                0 25px 80px rgba(0, 0, 0, 0.08),
+                0 10px 30px rgba(0, 0, 0, 0.04);
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
+                        box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+
+        .case-study-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 
+                0 40px 100px rgba(0, 0, 0, 0.12),
+                0 20px 50px rgba(0, 0, 0, 0.06);
+        }
+
+        .case-study-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--coral));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .case-study-card.in-view::before {
+            transform: scaleX(1);
+        }
+
+        .case-study-visual {
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .case-study-visual.lawncare {
+            background: linear-gradient(135deg, #065f46 0%, #047857 50%, #059669 100%);
+        }
+
+        .case-study-visual.salon {
+            background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 50%, #a78bfa 100%);
+        }
+
+        .case-study-visual.cleaning {
+            background: linear-gradient(135deg, #0369a1 0%, #0ea5e9 50%, #38bdf8 100%);
+        }
+
+        .case-study-visual.landscaping {
+            background: linear-gradient(135deg, #b45309 0%, #d97706 50%, #f59e0b 100%);
+        }
+
+        .case-study-icon {
+            width: 180px;
+            height: 180px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            animation: case-study-float 6s ease-in-out infinite;
+        }
+
+        @keyframes case-study-float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(3deg); }
+        }
+
+        .case-study-stats {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            right: 30px;
+            display: flex;
+            gap: 20px;
+        }
+
+        .case-study-stat {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 16px 20px;
+            border-radius: 16px;
+            flex: 1;
+            text-align: center;
+        }
+
+        .case-study-stat-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            line-height: 1;
+        }
+
+        .case-study-stat-label {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .case-study-content {
+            padding: 48px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .case-study-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            background: var(--bg-soft);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-light);
+            margin-bottom: 20px;
+            width: fit-content;
+        }
+
+        .case-study-tag::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--success);
+            border-radius: 50%;
+        }
+
+        .case-study-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 12px;
+            line-height: 1.2;
+        }
+
+        .case-study-company {
+            font-size: 1rem;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+
+        .case-study-description {
+            font-size: 1rem;
+            color: var(--text-light);
+            line-height: 1.8;
+            margin-bottom: 32px;
+        }
+
+        .case-study-features {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .case-study-feature {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+
+        .case-study-feature svg {
+            width: 20px;
+            height: 20px;
+            color: var(--success);
+            flex-shrink: 0;
+        }
+
+        .case-study-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent);
+            font-weight: 600;
+            text-decoration: none;
+            transition: gap 0.3s ease;
+        }
+
+        .case-study-link:hover {
+            gap: 12px;
+        }
+
+        /* Scroll Progress Indicator */
+        .case-studies-progress {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .case-studies-progress-bar {
+            width: 200px;
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .case-studies-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--coral));
+            border-radius: 2px;
+            transition: width 0.3s ease;
+            width: 25%;
+        }
+
+        .case-studies-progress-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .case-studies-progress-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--border);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .case-studies-progress-dot.active {
+            background: var(--accent);
+            transform: scale(1.3);
+        }
+
+        .case-studies-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 56px;
+            height: 56px;
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .case-studies-nav:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .case-studies-nav:hover svg {
+            stroke: white;
+        }
+
+        .case-studies-nav.prev {
+            left: 40px;
+        }
+
+        .case-studies-nav.next {
+            right: 40px;
+        }
+
+        .case-studies-nav svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--text-light);
+            transition: stroke 0.3s ease;
+        }
+
+        /* Dark mode adjustments */
+        [data-theme="dark"] .case-study-card {
+            background: var(--bg-card);
+            box-shadow: 
+                0 25px 80px rgba(0, 0, 0, 0.3),
+                0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        [data-theme="dark"] .case-study-icon {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .case-study-card {
+                flex: 0 0 90vw;
+                grid-template-columns: 1fr;
+                height: auto;
+                min-height: unset;
+            }
+
+            .case-study-visual {
+                min-height: 280px;
+                padding: 30px;
+            }
+
+            .case-study-icon {
+                width: 120px;
+                height: 120px;
+                font-size: 3.5rem;
+            }
+
+            .case-study-stats {
+                position: relative;
+                bottom: auto;
+                left: auto;
+                right: auto;
+                margin-top: 20px;
+            }
+
+            .case-study-content {
+                padding: 32px;
+            }
+
+            .case-study-title {
+                font-size: 1.5rem;
+            }
+
+            .case-studies-nav {
+                display: none;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .case-studies-track {
+                padding: 0 20px;
+                gap: 20px;
+            }
+
+            .case-study-card {
+                flex: 0 0 85vw;
+                border-radius: 24px;
+            }
+
+            .case-study-content {
+                padding: 24px;
+            }
+
+            .case-study-stat-value {
+                font-size: 1.5rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -3028,6 +3442,263 @@
     </div>
 </section>
 
+<!-- Horizontal Scroll Case Studies Section -->
+<section class="case-studies-section" id="case-studies">
+    <div class="case-studies-header">
+        <div class="container">
+            <span class="section-label solution">Case Studies</span>
+            <h2 class="section-title">Real Results, Real Businesses</h2>
+            <p class="section-subtitle" style="max-width: 600px; margin: 16px auto 0; color: var(--text-light);">
+                Swipe or scroll to explore how local businesses transformed their operations with RelayRun.
+            </p>
+        </div>
+    </div>
+
+    <div class="case-studies-container">
+        <button class="case-studies-nav prev" aria-label="Previous case study">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+        </button>
+
+        <div class="case-studies-track" id="caseStudiesTrack">
+            <!-- Case Study 1: Lawn Care -->
+            <article class="case-study-card">
+                <div class="case-study-visual lawncare">
+                    <div class="case-study-icon">🌿</div>
+                    <div class="case-study-stats">
+                        <div class="case-study-stat">
+                            <div class="case-study-stat-value">3.2x</div>
+                            <div class="case-study-stat-label">Lead Conversion</div>
+                        </div>
+                        <div class="case-study-stat">
+                            <div class="case-study-stat-value">12hrs</div>
+                            <div class="case-study-stat-label">Saved Weekly</div>
+                        </div>
+                        <div class="case-study-stat">
+                            <div class="case-study-stat-value">$8K</div>
+                            <div class="case-study-stat-label">New Revenue</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="case-study-content">
+                    <span class="case-study-tag">Lawn Care & Landscaping</span>
+                    <h3 class="case-study-title">From Voicemails to Verified Appointments</h3>
+                    <p class="case-study-company">GreenScape Pro — Lancaster, PA</p>
+                    <p class="case-study-description">
+                        Every missed call was a lost job. Now, every inquiry gets an instant response, 
+                        quote estimate, and booking link—automatically. Their crew focuses on mowing, 
+                        not managing phones.
+                    </p>
+                    <div class="case-study-features">
+                        <div class="case-study-feature">
+                            <svg viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Instant SMS response to all inquiries
+                        </div>
+                        <div class="case-study-feature">
+                            <svg viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Automated quote calculator by lawn size
+                        </div>
+                        <div class="case-study-feature">
+                            <svg viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Calendar integration with route optimization
+                        </div>
+                    </div>
+                    <a href="#" class="case-study-link">
+                        Read full story →
+                    </a>
+                </div>
+            </article>
+
+            <!-- Case Study 2: Salon -->
+            <article class="case-study-card">
+                <div class="case-study-visual salon">
+                    <div class="case-study-icon">✨</div>
+                    <div class="case-study-stats">
+                        <div class="case-study-stat">
+                            <div class="case-study-stat-value">47%</div>
+                            <div class="case-study-stat-label">Fewer No-Shows</div>
+                        </div>
+                        <div class="case-study-stat">
+                            <div class="case-study-stat-value">156</div>
+                            <div class="case-study-stat-label">New Reviews</div>
+                        </div>
+                        <div class="case-study-stat">
+                            <div class="case-study-stat-value">4.9★</div>
+                            <div class="case-study-stat-label">Google Rating</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="case-study-content">
+                    <span class="case-study-tag">Hair Salon & Spa</span>
+                    <h3 class="case-study-title">The Review Machine That Runs 24/7</h3>
+                    <p class="case-study-company">Luxe Studio — York, PA</p>
+                    <p class="case-study-description">
+                        Stylists were too busy to chase reviews. Now, happy clients get a gentle 
+                        SMS invitation right after their appointment. No-shows dropped dramatically 
+                        with automated reminders.
+                    </p>
+                    <div class="case-study-features">
+                        <div class="case-study-feature">
+                            <svg viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Smart review requests post-appointment
+                        </div>
+                        <div class="case-study-feature">
+                            <svg viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Multi-channel reminder system
+                        </div>
+                        <div class="case-study-feature">
+                            <svg viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Online booking with deposit protection
+                        </div>
+                    </div>
+                    <a href="#" class="case-study-link">
+                        Read full story →
+                    </a>
+                </div>
+            </article>
+
+            <!-- Case Study 3: Cleaning -->
+            <article class="case-study-card">
+                <div class="case-study-visual cleaning">
+                    <div class="case-study-icon">🧹</div>
+                    <div class="case-study-stats">
+                        <div class="case-study-stat">
+                            <div class="case-study-stat-value">+340%</div>
+                            <div class="case-study-stat-label">Response Rate</div>
+                        </div>
+                        <div class="case-study-stat">
+                            <div class="case-study-stat-value">18hrs</div>
+                            <div class="case-study-stat-label">Faster Response</div>
+                        </div>
+                        <div class="case-study-stat">
+                            <div class="case-study-stat-value">98%</div>
+                            <div class="case-study-stat-label">Happy Clients</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="case-study-content">
+                    <span class="case-study-tag">Residential Cleaning</span>
+                    <h3 class="case-study-title">Waking Up to a Full Schedule</h3>
+                    <p class="case-study-company">Sparkle Clean — Harrisburg, PA</p>
+                    <p class="case-study-description">
+                        Night owls and early birds were booking at odd hours—and waiting hours for 
+                        a response. Now the system books and confirms appointments instantly, even 
+                        at 2 AM.
+                    </p>
+                    <div class="case-study-features">
+                        <div class="case-study-feature">
+                            <svg viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            24/7 instant booking confirmation
+                        </div>
+                        <div class="case-study-feature">
+                            <svg viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Automated crew assignment by zone
+                        </div>
+                        <div class="case-study-feature">
+                            <svg viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Follow-up sequences for recurring bookings
+                        </div>
+                    </div>
+                    <a href="#" class="case-study-link">
+                        Read full story →
+                    </a>
+                </div>
+            </article>
+
+            <!-- Case Study 4: Landscaping -->
+            <article class="case-study-card">
+                <div class="case-study-visual landscaping">
+                    <div class="case-study-icon">🏡</div>
+                    <div class="case-study-stats">
+                        <div class="case-study-stat">
+                            <div class="case-study-stat-value">$50K+</div>
+                            <div class="case-study-stat-label">Recovered</div>
+                        </div>
+                        <div class="case-study-stat">
+                            <div class="case-study-stat-value">65%</div>
+                            <div class="case-study-stat-label">More Estimates</div>
+                        </div>
+                        <div class="case-study-stat">
+                            <div class="case-study-stat-value">2min</div>
+                            <div class="case-study-stat-label">Avg Response</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="case-study-content">
+                    <span class="case-study-tag">Hardscaping & Design</span>
+                    <h3 class="case-study-title">Big Projects Need Fast Follow-Up</h3>
+                    <p class="case-study-company">Terra Firma Design — Columbia, PA</p>
+                    <p class="case-study-description">
+                        High-ticket landscaping projects were slipping away to faster competitors. 
+                        Now every quote request triggers an instant response with portfolio links, 
+                        testimonials, and scheduling.
+                    </p>
+                    <div class="case-study-features">
+                        <div class="case-study-feature">
+                            <svg viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Instant quote request acknowledgment
+                        </div>
+                        <div class="case-study-feature">
+                            <svg viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Automated portfolio showcase
+                        </div>
+                        <div class="case-study-feature">
+                            <svg viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Multi-touch nurture sequences
+                        </div>
+                    </div>
+                    <a href="#" class="case-study-link">
+                        Read full story →
+                    </a>
+                </div>
+            </article>
+        </div>
+
+        <button class="case-studies-nav next" aria-label="Next case study">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+        </button>
+
+        <div class="case-studies-progress">
+            <div class="case-studies-progress-bar">
+                <div class="case-studies-progress-fill" id="progressFill"></div>
+            </div>
+            <div class="case-studies-progress-dots" id="progressDots">
+                <button class="case-studies-progress-dot active" data-index="0" aria-label="Case study 1"></button>
+                <button class="case-studies-progress-dot" data-index="1" aria-label="Case study 2"></button>
+                <button class="case-studies-progress-dot" data-index="2" aria-label="Case study 3"></button>
+                <button class="case-studies-progress-dot" data-index="3" aria-label="Case study 4"></button>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- CTA Section -->
 <section class="cta-section" id="audit">
     <div class="container">
@@ -3405,6 +4076,121 @@
     if (heroHeading) {
         heroHeading.style.transition = 'transform 0.15s cubic-bezier(0.16, 1, 0.3, 1)';
         requestAnimationFrame(updateScrollReactiveType);
+    }
+
+    // ========================================
+    // HORIZONTAL SCROLL CASE STUDIES
+    // ========================================
+    
+    const caseStudiesTrack = document.getElementById('caseStudiesTrack');
+    const prevBtn = document.querySelector('.case-studies-nav.prev');
+    const nextBtn = document.querySelector('.case-studies-nav.next');
+    const progressFill = document.getElementById('progressFill');
+    const progressDots = document.querySelectorAll('.case-studies-progress-dot');
+    const caseStudyCards = document.querySelectorAll('.case-study-card');
+    
+    if (caseStudiesTrack) {
+        const cardWidth = caseStudyCards[0]?.offsetWidth || 1000;
+        const gap = 40;
+        const scrollAmount = cardWidth + gap;
+        
+        // Navigation buttons
+        prevBtn?.addEventListener('click', () => {
+            caseStudiesTrack.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+        });
+        
+        nextBtn?.addEventListener('click', () => {
+            caseStudiesTrack.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        });
+        
+        // Progress dots navigation
+        progressDots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                caseStudiesTrack.scrollTo({ 
+                    left: scrollAmount * index, 
+                    behavior: 'smooth' 
+                });
+            });
+        });
+        
+        // Update progress on scroll
+        function updateCaseStudiesProgress() {
+            const scrollLeft = caseStudiesTrack.scrollLeft;
+            const maxScroll = caseStudiesTrack.scrollWidth - caseStudiesTrack.clientWidth;
+            const scrollProgress = scrollLeft / maxScroll;
+            
+            // Update progress bar
+            if (progressFill) {
+                progressFill.style.width = `${Math.max(25, scrollProgress * 100)}%`;
+            }
+            
+            // Update active dot
+            const activeIndex = Math.round((scrollLeft / maxScroll) * (progressDots.length - 1));
+            progressDots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === activeIndex);
+            });
+            
+            // Add in-view class for animation
+            caseStudyCards.forEach((card, index) => {
+                const cardLeft = card.offsetLeft - caseStudiesTrack.scrollLeft;
+                const cardCenter = cardLeft + card.offsetWidth / 2;
+                const containerCenter = caseStudiesTrack.clientWidth / 2;
+                const distanceFromCenter = Math.abs(cardCenter - containerCenter);
+                
+                if (distanceFromCenter < card.offsetWidth / 2) {
+                    card.classList.add('in-view');
+                } else {
+                    card.classList.remove('in-view');
+                }
+            });
+        }
+        
+        caseStudiesTrack.addEventListener('scroll', updateCaseStudiesProgress, { passive: true });
+        
+        // Initial check
+        updateCaseStudiesProgress();
+        
+        // Keyboard navigation
+        caseStudiesTrack.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                caseStudiesTrack.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+            } else if (e.key === 'ArrowRight') {
+                caseStudiesTrack.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            }
+        });
+        
+        // Drag to scroll
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+        
+        caseStudiesTrack.addEventListener('mousedown', (e) => {
+            isDown = true;
+            caseStudiesTrack.style.cursor = 'grabbing';
+            startX = e.pageX - caseStudiesTrack.offsetLeft;
+            scrollLeft = caseStudiesTrack.scrollLeft;
+        });
+        
+        caseStudiesTrack.addEventListener('mouseleave', () => {
+            isDown = false;
+            caseStudiesTrack.style.cursor = 'grab';
+        });
+        
+        caseStudiesTrack.addEventListener('mouseup', () => {
+            isDown = false;
+            caseStudiesTrack.style.cursor = 'grab';
+        });
+        
+        caseStudiesTrack.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - caseStudiesTrack.offsetLeft;
+            const walk = (x - startX) * 2;
+            caseStudiesTrack.scrollLeft = scrollLeft - walk;
+        });
+        
+        // Set initial cursor
+        caseStudiesTrack.style.cursor = 'grab';
     }
 </script>
 

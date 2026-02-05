@@ -1061,95 +1061,180 @@
             color: var(--primary);
             margin-bottom: 24px;
             letter-spacing: -0.03em;
+            perspective: 1000px;
+            transform-style: preserve-3d;
         }
         
         .hero h1 .headline-word {
             display: inline-block;
             opacity: 0;
-            transform: translateY(40px) rotateX(-90deg);
-            transform-origin: bottom;
-            animation: word-reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            transform: translateY(60px) rotateX(-45deg) translateZ(-50px);
+            transform-origin: center bottom;
+            animation: word-reveal-3d 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            text-shadow: 
+                0 1px 0 rgba(13, 59, 59, 0.1),
+                0 2px 0 rgba(13, 59, 59, 0.08),
+                0 3px 0 rgba(13, 59, 59, 0.06),
+                0 4px 8px rgba(13, 59, 59, 0.1);
         }
         
-        .hero h1 .headline-word:nth-child(1) { animation-delay: 0.2s; }
-        .hero h1 .headline-word:nth-child(2) { animation-delay: 0.4s; }
-        .hero h1 .headline-word:nth-child(3) { animation-delay: 0.6s; }
-        .hero h1 .headline-word:nth-child(4) { animation-delay: 0.8s; }
+        [data-theme="dark"] .hero h1 .headline-word {
+            text-shadow: 
+                0 1px 0 rgba(20, 184, 166, 0.15),
+                0 2px 0 rgba(20, 184, 166, 0.12),
+                0 3px 0 rgba(20, 184, 166, 0.09),
+                0 4px 12px rgba(20, 184, 166, 0.15);
+        }
         
-        @keyframes word-reveal {
+        .hero h1 .headline-word:nth-child(1) { animation-delay: 0.3s; }
+        .hero h1 .headline-word:nth-child(2) { animation-delay: 0.55s; }
+        .hero h1 .headline-word:nth-child(3) { animation-delay: 0.8s; }
+        .hero h1 .headline-word:nth-child(4) { animation-delay: 1.05s; }
+        
+        @keyframes word-reveal-3d {
             from {
                 opacity: 0;
-                transform: translateY(40px) rotateX(-90deg);
+                transform: translateY(60px) rotateX(-45deg) translateZ(-50px);
+                filter: blur(10px);
+            }
+            60% {
+                filter: blur(2px);
             }
             to {
                 opacity: 1;
-                transform: translateY(0) rotateX(0);
+                transform: translateY(0) rotateX(0) translateZ(0);
+                filter: blur(0);
             }
         }
         
         .hero h1 .headline-accent {
             display: inline-block;
-            background: linear-gradient(135deg, var(--accent) 0%, var(--coral) 50%, var(--accent) 100%);
-            background-size: 200% 200%;
+            background: linear-gradient(
+                135deg, 
+                var(--accent) 0%, 
+                var(--coral) 25%, 
+                var(--accent-secondary) 50%,
+                var(--coral) 75%,
+                var(--accent) 100%
+            );
+            background-size: 300% 300%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: gradient-shift 5s ease infinite;
+            animation: gradient-shift-3d 4s ease infinite, word-reveal-3d 1s cubic-bezier(0.16, 1, 0.3, 1) 1.2s forwards;
             opacity: 0;
-            animation: gradient-shift 5s ease infinite, word-reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) 1s forwards;
+            transform: translateY(60px) rotateX(-45deg) translateZ(-50px);
+            position: relative;
+            text-shadow: none;
+            filter: drop-shadow(0 4px 12px rgba(217, 119, 6, 0.3));
+        }
+        
+        [data-theme="dark"] .hero h1 .headline-accent {
+            filter: drop-shadow(0 4px 16px rgba(245, 158, 11, 0.4));
+        }
+        
+        @keyframes gradient-shift-3d {
+            0% { background-position: 0% 50%; }
+            25% { background-position: 100% 0%; }
+            50% { background-position: 100% 100%; }
+            75% { background-position: 0% 100%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Shimmer overlay effect for accent text */
+        .hero h1 .headline-accent::after {
+            content: attr(data-text);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.4) 50%,
+                transparent 100%
+            );
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: text-shimmer 3s ease-in-out infinite;
+            animation-delay: 2s;
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        @keyframes text-shimmer {
+            0%, 100% { 
+                background-position: -200% 0; 
+                opacity: 0;
+            }
+            50% { 
+                background-position: 200% 0; 
+                opacity: 0.8;
+            }
         }
 
         /* ========================================
-           KINETIC TYPOGRAPHY EFFECTS
+           KINETIC TYPOGRAPHY EFFECTS v2 - Enhanced
            ======================================== */
 
         /* Letter-level container for kinetic effects */
         .kinetic-letter {
             display: inline-block;
             transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            will-change: transform;
+            will-change: transform, opacity;
+            transform-style: preserve-3d;
         }
 
         /* Wave entrance animation for each letter */
         .headline-word.kinetic-active .kinetic-letter,
         .headline-accent.kinetic-active .kinetic-letter {
-            animation: letter-wave 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: letter-wave-enhanced 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             opacity: 0;
-            transform: translateY(60px) rotateZ(var(--rotation, 0deg));
+            transform: translateY(80px) rotateZ(var(--rotation, 0deg)) rotateX(-30deg) scale(0.5);
         }
 
         /* Staggered delays for wave effect through letters */
-        .headline-word.kinetic-active .kinetic-letter:nth-child(1) { animation-delay: 0.2s; --rotation: -8deg; }
-        .headline-word.kinetic-active .kinetic-letter:nth-child(2) { animation-delay: 0.28s; --rotation: 5deg; }
-        .headline-word.kinetic-active .kinetic-letter:nth-child(3) { animation-delay: 0.36s; --rotation: -3deg; }
-        .headline-word.kinetic-active .kinetic-letter:nth-child(4) { animation-delay: 0.44s; --rotation: 6deg; }
-        .headline-word.kinetic-active .kinetic-letter:nth-child(5) { animation-delay: 0.52s; --rotation: -4deg; }
-        .headline-word.kinetic-active .kinetic-letter:nth-child(6) { animation-delay: 0.6s; --rotation: 3deg; }
-        .headline-word.kinetic-active .kinetic-letter:nth-child(7) { animation-delay: 0.68s; --rotation: -5deg; }
-        .headline-word.kinetic-active .kinetic-letter:nth-child(8) { animation-delay: 0.76s; --rotation: 4deg; }
-        .headline-word.kinetic-active .kinetic-letter:nth-child(9) { animation-delay: 0.84s; --rotation: -2deg; }
+        .headline-word.kinetic-active .kinetic-letter:nth-child(1) { animation-delay: 0.3s; --rotation: -12deg; }
+        .headline-word.kinetic-active .kinetic-letter:nth-child(2) { animation-delay: 0.4s; --rotation: 8deg; }
+        .headline-word.kinetic-active .kinetic-letter:nth-child(3) { animation-delay: 0.5s; --rotation: -5deg; }
+        .headline-word.kinetic-active .kinetic-letter:nth-child(4) { animation-delay: 0.6s; --rotation: 10deg; }
+        .headline-word.kinetic-active .kinetic-letter:nth-child(5) { animation-delay: 0.7s; --rotation: -7deg; }
+        .headline-word.kinetic-active .kinetic-letter:nth-child(6) { animation-delay: 0.8s; --rotation: 4deg; }
+        .headline-word.kinetic-active .kinetic-letter:nth-child(7) { animation-delay: 0.9s; --rotation: -9deg; }
+        .headline-word.kinetic-active .kinetic-letter:nth-child(8) { animation-delay: 1.0s; --rotation: 6deg; }
+        .headline-word.kinetic-active .kinetic-letter:nth-child(9) { animation-delay: 1.1s; --rotation: -4deg; }
 
         /* Accent words get different timing */
-        .headline-accent.kinetic-active .kinetic-letter:nth-child(1) { animation-delay: 1.0s; --rotation: -6deg; }
-        .headline-accent.kinetic-active .kinetic-letter:nth-child(2) { animation-delay: 1.08s; --rotation: 4deg; }
-        .headline-accent.kinetic-active .kinetic-letter:nth-child(3) { animation-delay: 1.16s; --rotation: -4deg; }
-        .headline-accent.kinetic-active .kinetic-letter:nth-child(4) { animation-delay: 1.24s; --rotation: 5deg; }
-        .headline-accent.kinetic-active .kinetic-letter:nth-child(5) { animation-delay: 1.32s; --rotation: -3deg; }
-        .headline-accent.kinetic-active .kinetic-letter:nth-child(6) { animation-delay: 1.4s; --rotation: 6deg; }
-        .headline-accent.kinetic-active .kinetic-letter:nth-child(7) { animation-delay: 1.48s; --rotation: -5deg; }
-        .headline-accent.kinetic-active .kinetic-letter:nth-child(8) { animation-delay: 1.56s; --rotation: 3deg; }
+        .headline-accent.kinetic-active .kinetic-letter:nth-child(1) { animation-delay: 1.2s; --rotation: -10deg; }
+        .headline-accent.kinetic-active .kinetic-letter:nth-child(2) { animation-delay: 1.28s; --rotation: 6deg; }
+        .headline-accent.kinetic-active .kinetic-letter:nth-child(3) { animation-delay: 1.36s; --rotation: -8deg; }
+        .headline-accent.kinetic-active .kinetic-letter:nth-child(4) { animation-delay: 1.44s; --rotation: 7deg; }
+        .headline-accent.kinetic-active .kinetic-letter:nth-child(5) { animation-delay: 1.52s; --rotation: -5deg; }
+        .headline-accent.kinetic-active .kinetic-letter:nth-child(6) { animation-delay: 1.6s; --rotation: 9deg; }
+        .headline-accent.kinetic-active .kinetic-letter:nth-child(7) { animation-delay: 1.68s; --rotation: -6deg; }
+        .headline-accent.kinetic-active .kinetic-letter:nth-child(8) { animation-delay: 1.76s; --rotation: 4deg; }
 
-        @keyframes letter-wave {
+        @keyframes letter-wave-enhanced {
             0% {
                 opacity: 0;
-                transform: translateY(60px) rotateZ(var(--rotation, 0deg)) scale(0.8);
+                transform: translateY(80px) rotateZ(var(--rotation, 0deg)) rotateX(-30deg) scale(0.5);
+                filter: blur(8px);
             }
-            60% {
-                transform: translateY(-10px) rotateZ(calc(var(--rotation, 0deg) * 0.3)) scale(1.05);
+            50% {
+                opacity: 0.8;
+                transform: translateY(-15px) rotateZ(calc(var(--rotation, 0deg) * 0.2)) rotateX(5deg) scale(1.1);
+                filter: blur(2px);
+            }
+            75% {
+                transform: translateY(5px) rotateZ(0deg) rotateX(-2deg) scale(0.98);
             }
             100% {
                 opacity: 1;
-                transform: translateY(0) rotateZ(0deg) scale(1);
+                transform: translateY(0) rotateZ(0deg) rotateX(0) scale(1);
+                filter: blur(0);
             }
         }
 
@@ -1159,22 +1244,24 @@
         }
 
         .headline-accent .kinetic-letter {
-            animation: letter-wave 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards,
-                       letter-float 4s ease-in-out infinite;
+            animation: letter-wave-enhanced 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards,
+                       letter-float-enhanced 5s ease-in-out infinite;
         }
 
         /* Staggered float timing for organic feel */
-        .headline-accent .kinetic-letter:nth-child(1) { animation-delay: 1.0s, 2.0s; }
-        .headline-accent .kinetic-letter:nth-child(2) { animation-delay: 1.08s, 2.3s; }
-        .headline-accent .kinetic-letter:nth-child(3) { animation-delay: 1.16s, 2.6s; }
-        .headline-accent .kinetic-letter:nth-child(4) { animation-delay: 1.24s, 2.9s; }
-        .headline-accent .kinetic-letter:nth-child(5) { animation-delay: 1.32s, 3.2s; }
-        .headline-accent .kinetic-letter:nth-child(6) { animation-delay: 1.4s, 3.5s; }
-        .headline-accent .kinetic-letter:nth-child(7) { animation-delay: 1.48s, 3.8s; }
+        .headline-accent .kinetic-letter:nth-child(1) { animation-delay: 1.2s, 2.0s; }
+        .headline-accent .kinetic-letter:nth-child(2) { animation-delay: 1.28s, 2.4s; }
+        .headline-accent .kinetic-letter:nth-child(3) { animation-delay: 1.36s, 2.8s; }
+        .headline-accent .kinetic-letter:nth-child(4) { animation-delay: 1.44s, 3.2s; }
+        .headline-accent .kinetic-letter:nth-child(5) { animation-delay: 1.52s, 3.6s; }
+        .headline-accent .kinetic-letter:nth-child(6) { animation-delay: 1.6s, 4.0s; }
+        .headline-accent .kinetic-letter:nth-child(7) { animation-delay: 1.68s, 4.4s; }
 
-        @keyframes letter-float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-3px); }
+        @keyframes letter-float-enhanced {
+            0%, 100% { transform: translateY(0) rotateZ(0deg); }
+            25% { transform: translateY(-4px) rotateZ(0.5deg); }
+            50% { transform: translateY(-2px) rotateZ(-0.3deg); }
+            75% { transform: translateY(-5px) rotateZ(0.2deg); }
         }
 
         /* Hover kinetic response - letters scatter slightly on headline hover */
@@ -1183,16 +1270,16 @@
         }
 
         .hero h1:hover .headline-word .kinetic-letter:nth-child(odd) {
-            transform: translateY(-2px) rotateZ(-1deg);
+            transform: translateY(-3px) rotateZ(-2deg) scale(1.02);
         }
 
         .hero h1:hover .headline-word .kinetic-letter:nth-child(even) {
-            transform: translateY(2px) rotateZ(1deg);
+            transform: translateY(3px) rotateZ(2deg) scale(1.02);
         }
 
-        /* Magnetic pull effect on letters near cursor */
-        .kinetic-letter.magnetic-pull {
-            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        /* Accent letters get a glow on hover */
+        .hero h1:hover .headline-accent .kinetic-letter {
+            filter: drop-shadow(0 0 8px rgba(217, 119, 6, 0.5));
         }
 
         /* Reduced motion support */
@@ -3418,10 +3505,10 @@
                     <span class="headline-word kinetic-active">
                         <span class="kinetic-letter">B</span><span class="kinetic-letter">u</span><span class="kinetic-letter">s</span><span class="kinetic-letter">i</span><span class="kinetic-letter">n</span><span class="kinetic-letter">e</span><span class="kinetic-letter">s</span><span class="kinetic-letter">s</span><span class="kinetic-letter">,</span>
                     </span>
-                    <span class="headline-accent kinetic-active">
+                    <span class="headline-accent kinetic-active" data-text="Running">
                         <span class="kinetic-letter">R</span><span class="kinetic-letter">u</span><span class="kinetic-letter">n</span><span class="kinetic-letter">n</span><span class="kinetic-letter">i</span><span class="kinetic-letter">n</span><span class="kinetic-letter">g</span>
                     </span>
-                    <span class="headline-accent kinetic-active">
+                    <span class="headline-accent kinetic-active" data-text="Itself">
                         <span class="kinetic-letter">I</span><span class="kinetic-letter">t</span><span class="kinetic-letter">s</span><span class="kinetic-letter">e</span><span class="kinetic-letter">l</span><span class="kinetic-letter">f</span>
                     </span>
                 </h1>

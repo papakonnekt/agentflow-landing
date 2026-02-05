@@ -826,6 +826,122 @@
             opacity: 0;
             animation: gradient-shift 5s ease infinite, word-reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) 1s forwards;
         }
+
+        /* ========================================
+           KINETIC TYPOGRAPHY EFFECTS
+           ======================================== */
+
+        /* Letter-level container for kinetic effects */
+        .kinetic-letter {
+            display: inline-block;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform;
+        }
+
+        /* Wave entrance animation for each letter */
+        .headline-word.kinetic-active .kinetic-letter,
+        .headline-accent.kinetic-active .kinetic-letter {
+            animation: letter-wave 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(60px) rotateZ(var(--rotation, 0deg));
+        }
+
+        /* Staggered delays for wave effect through letters */
+        .headline-word.kinetic-active .kinetic-letter:nth-child(1) { animation-delay: 0.2s; --rotation: -8deg; }
+        .headline-word.kinetic-active .kinetic-letter:nth-child(2) { animation-delay: 0.28s; --rotation: 5deg; }
+        .headline-word.kinetic-active .kinetic-letter:nth-child(3) { animation-delay: 0.36s; --rotation: -3deg; }
+        .headline-word.kinetic-active .kinetic-letter:nth-child(4) { animation-delay: 0.44s; --rotation: 6deg; }
+        .headline-word.kinetic-active .kinetic-letter:nth-child(5) { animation-delay: 0.52s; --rotation: -4deg; }
+        .headline-word.kinetic-active .kinetic-letter:nth-child(6) { animation-delay: 0.6s; --rotation: 3deg; }
+        .headline-word.kinetic-active .kinetic-letter:nth-child(7) { animation-delay: 0.68s; --rotation: -5deg; }
+        .headline-word.kinetic-active .kinetic-letter:nth-child(8) { animation-delay: 0.76s; --rotation: 4deg; }
+        .headline-word.kinetic-active .kinetic-letter:nth-child(9) { animation-delay: 0.84s; --rotation: -2deg; }
+
+        /* Accent words get different timing */
+        .headline-accent.kinetic-active .kinetic-letter:nth-child(1) { animation-delay: 1.0s; --rotation: -6deg; }
+        .headline-accent.kinetic-active .kinetic-letter:nth-child(2) { animation-delay: 1.08s; --rotation: 4deg; }
+        .headline-accent.kinetic-active .kinetic-letter:nth-child(3) { animation-delay: 1.16s; --rotation: -4deg; }
+        .headline-accent.kinetic-active .kinetic-letter:nth-child(4) { animation-delay: 1.24s; --rotation: 5deg; }
+        .headline-accent.kinetic-active .kinetic-letter:nth-child(5) { animation-delay: 1.32s; --rotation: -3deg; }
+        .headline-accent.kinetic-active .kinetic-letter:nth-child(6) { animation-delay: 1.4s; --rotation: 6deg; }
+        .headline-accent.kinetic-active .kinetic-letter:nth-child(7) { animation-delay: 1.48s; --rotation: -5deg; }
+        .headline-accent.kinetic-active .kinetic-letter:nth-child(8) { animation-delay: 1.56s; --rotation: 3deg; }
+
+        @keyframes letter-wave {
+            0% {
+                opacity: 0;
+                transform: translateY(60px) rotateZ(var(--rotation, 0deg)) scale(0.8);
+            }
+            60% {
+                transform: translateY(-10px) rotateZ(calc(var(--rotation, 0deg) * 0.3)) scale(1.05);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) rotateZ(0deg) scale(1);
+            }
+        }
+
+        /* Continuous subtle float for key words (breathing effect) */
+        .headline-accent {
+            position: relative;
+        }
+
+        .headline-accent .kinetic-letter {
+            animation: letter-wave 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards,
+                       letter-float 4s ease-in-out infinite;
+        }
+
+        /* Staggered float timing for organic feel */
+        .headline-accent .kinetic-letter:nth-child(1) { animation-delay: 1.0s, 2.0s; }
+        .headline-accent .kinetic-letter:nth-child(2) { animation-delay: 1.08s, 2.3s; }
+        .headline-accent .kinetic-letter:nth-child(3) { animation-delay: 1.16s, 2.6s; }
+        .headline-accent .kinetic-letter:nth-child(4) { animation-delay: 1.24s, 2.9s; }
+        .headline-accent .kinetic-letter:nth-child(5) { animation-delay: 1.32s, 3.2s; }
+        .headline-accent .kinetic-letter:nth-child(6) { animation-delay: 1.4s, 3.5s; }
+        .headline-accent .kinetic-letter:nth-child(7) { animation-delay: 1.48s, 3.8s; }
+
+        @keyframes letter-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+
+        /* Hover kinetic response - letters scatter slightly on headline hover */
+        .hero h1:hover .kinetic-letter {
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .hero h1:hover .headline-word .kinetic-letter:nth-child(odd) {
+            transform: translateY(-2px) rotateZ(-1deg);
+        }
+
+        .hero h1:hover .headline-word .kinetic-letter:nth-child(even) {
+            transform: translateY(2px) rotateZ(1deg);
+        }
+
+        /* Magnetic pull effect on letters near cursor */
+        .kinetic-letter.magnetic-pull {
+            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            .kinetic-letter {
+                animation: none !important;
+                opacity: 1 !important;
+                transform: none !important;
+            }
+        }
+
+        /* Mobile: Simplified kinetic effects */
+        @media (max-width: 768px) {
+            .kinetic-letter {
+                animation-duration: 0.4s !important;
+            }
+            @keyframes letter-float {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-2px); }
+            }
+        }
         
         .hero-description {
             font-size: 1.25rem;
@@ -2409,7 +2525,20 @@
         <div class="hero-grid">
             <div class="hero-content">
                 <div class="hero-badge">AI Automation for Service Businesses</div>
-                <h1><span class="headline-word">Your</span> <span class="headline-word">Business,</span> <span class="headline-accent">Running</span> <span class="headline-accent">Itself</span></h1>
+                <h1>
+                    <span class="headline-word kinetic-active">
+                        <span class="kinetic-letter">Y</span><span class="kinetic-letter">o</span><span class="kinetic-letter">u</span><span class="kinetic-letter">r</span>
+                    </span>
+                    <span class="headline-word kinetic-active">
+                        <span class="kinetic-letter">B</span><span class="kinetic-letter">u</span><span class="kinetic-letter">s</span><span class="kinetic-letter">i</span><span class="kinetic-letter">n</span><span class="kinetic-letter">e</span><span class="kinetic-letter">s</span><span class="kinetic-letter">s</span><span class="kinetic-letter">,</span>
+                    </span>
+                    <span class="headline-accent kinetic-active">
+                        <span class="kinetic-letter">R</span><span class="kinetic-letter">u</span><span class="kinetic-letter">n</span><span class="kinetic-letter">n</span><span class="kinetic-letter">i</span><span class="kinetic-letter">n</span><span class="kinetic-letter">g</span>
+                    </span>
+                    <span class="headline-accent kinetic-active">
+                        <span class="kinetic-letter">I</span><span class="kinetic-letter">t</span><span class="kinetic-letter">s</span><span class="kinetic-letter">e</span><span class="kinetic-letter">l</span><span class="kinetic-letter">f</span>
+                    </span>
+                </h1>
                 <p class="hero-description">AI automation systems that respond to customers 24/7, book appointments automatically, and handle follow-ups—so you can focus on delivering great service while we handle the busywork.</p>
                 <div class="hero-cta-group">
                     <a href="#audit" class="btn-primary">Book Free Automation Audit <span class="btn-arrow">→</span></a>
@@ -3186,6 +3315,96 @@
             html.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
         });
+    }
+
+    // ========================================
+    // KINETIC TYPOGRAPHY EFFECTS
+    // ========================================
+    
+    // Magnetic letter effect - letters subtly respond to cursor proximity
+    const kineticLetters = document.querySelectorAll('.kinetic-letter');
+    const heroHeading = document.querySelector('.hero h1');
+    
+    // Only enable on non-touch devices
+    if (!window.matchMedia('(pointer: coarse)').matches && kineticLetters.length > 0) {
+        let mouseX = 0;
+        let mouseY = 0;
+        let isInHero = false;
+        
+        // Track mouse position
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            
+            if (isInHero) {
+                requestAnimationFrame(updateLetterMagnetism);
+            }
+        });
+        
+        // Detect when mouse enters/leaves hero heading
+        if (heroHeading) {
+            heroHeading.addEventListener('mouseenter', () => { isInHero = true; });
+            heroHeading.addEventListener('mouseleave', () => { 
+                isInHero = false;
+                // Reset all letters
+                kineticLetters.forEach(letter => {
+                    letter.style.transform = '';
+                });
+            });
+        }
+        
+        function updateLetterMagnetism() {
+            const magnetRadius = 100; // Distance within which letters are affected
+            const maxDisplacement = 5; // Maximum pixels to move
+            
+            kineticLetters.forEach(letter => {
+                const rect = letter.getBoundingClientRect();
+                const letterCenterX = rect.left + rect.width / 2;
+                const letterCenterY = rect.top + rect.height / 2;
+                
+                const deltaX = mouseX - letterCenterX;
+                const deltaY = mouseY - letterCenterY;
+                const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+                
+                if (distance < magnetRadius) {
+                    const force = (1 - distance / magnetRadius) * maxDisplacement;
+                    const moveX = (deltaX / distance) * force * 0.3; // Subtle horizontal
+                    const moveY = (deltaY / distance) * force * 0.3; // Subtle vertical
+                    
+                    letter.style.transform = `translate(${moveX}px, ${moveY}px)`;
+                } else {
+                    letter.style.transform = '';
+                }
+            });
+        }
+    }
+    
+    // Scroll-reactive typography - subtle weight/scale shift on scroll
+    let lastScrollY = window.scrollY;
+    let scrollVelocity = 0;
+    
+    function updateScrollReactiveType() {
+        const currentScrollY = window.scrollY;
+        scrollVelocity = Math.abs(currentScrollY - lastScrollY);
+        lastScrollY = currentScrollY;
+        
+        // Subtle scale effect based on scroll velocity
+        if (scrollVelocity > 5 && heroHeading) {
+            const scaleAmount = Math.min(scrollVelocity * 0.002, 0.02);
+            heroHeading.style.transform = `scale(${1 + scaleAmount})`;
+            
+            setTimeout(() => {
+                heroHeading.style.transform = '';
+            }, 150);
+        }
+        
+        requestAnimationFrame(updateScrollReactiveType);
+    }
+    
+    // Start scroll-reactive effects
+    if (heroHeading) {
+        heroHeading.style.transition = 'transform 0.15s cubic-bezier(0.16, 1, 0.3, 1)';
+        requestAnimationFrame(updateScrollReactiveType);
     }
 </script>
 

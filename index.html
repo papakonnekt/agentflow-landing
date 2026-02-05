@@ -591,9 +591,65 @@
             animation: float-slow 10s ease-in-out infinite reverse;
         }
         
+        .hero-accent-3 {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, var(--coral), var(--accent-secondary));
+            top: 40%;
+            right: -30px;
+            animation: float-slow 12s ease-in-out infinite;
+            animation-delay: -3s;
+        }
+        
         @keyframes float-slow {
             0%, 100% { transform: translateY(0) scale(1); }
             50% { transform: translateY(-30px) scale(1.1); }
+        }
+        
+        /* Parallax Scrolling Effects */
+        .parallax-container {
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .parallax-layer {
+            will-change: transform;
+            transition: transform 0.1s linear;
+        }
+        
+        .parallax-slow {
+            --parallax-speed: 0.3;
+        }
+        
+        .parallax-medium {
+            --parallax-speed: 0.5;
+        }
+        
+        .parallax-fast {
+            --parallax-speed: 0.8;
+        }
+        
+        /* Parallax for hero elements */
+        .hero-parallax-bg {
+            position: absolute;
+            top: -20%;
+            left: -10%;
+            right: -10%;
+            bottom: -20%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        /* Feature cards parallax */
+        .feature-card-parallax {
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        /* Reduce motion for accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            .parallax-layer {
+                transform: none !important;
+            }
         }
         
         /* Diagonal divider */
@@ -2151,8 +2207,9 @@
 
 <!-- Hero -->
 <section class="hero">
-    <div class="hero-accent-shape hero-accent-1"></div>
-    <div class="hero-accent-shape hero-accent-2"></div>
+    <div class="hero-accent-shape hero-accent-1 parallax-layer parallax-slow"></div>
+    <div class="hero-accent-shape hero-accent-2 parallax-layer parallax-medium"></div>
+    <div class="hero-accent-shape hero-accent-3 parallax-layer parallax-fast"></div>
     <div class="container">
         <div class="hero-grid">
             <div class="hero-content">
@@ -2796,6 +2853,48 @@
     let ringX = 0, ringY = 0;
     let isMoving = false;
     let moveTimeout;
+    
+    // Parallax Scrolling System
+    const parallaxElements = document.querySelectorAll('.parallax-layer');
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let parallaxTicking = false;
+    let lastScrollY = window.scrollY;
+    
+    function updateParallax() {
+        const scrollY = window.scrollY;
+        const viewportHeight = window.innerHeight;
+        
+        parallaxElements.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            const elementCenter = rect.top + rect.height / 2;
+            const viewportCenter = viewportHeight / 2;
+            const distanceFromCenter = elementCenter - viewportCenter;
+            
+            // Get speed from CSS variable or default
+            const speed = parseFloat(getComputedStyle(el).getPropertyValue('--parallax-speed')) || 0.5;
+            
+            // Calculate offset (only when element is in/near viewport)
+            if (rect.top < viewportHeight + 100 && rect.bottom > -100) {
+                const offset = distanceFromCenter * speed * 0.1;
+                el.style.transform = `translateY(${offset}px)`;
+            }
+        });
+        
+        parallaxTicking = false;
+    }
+    
+    function requestParallaxUpdate() {
+        if (!parallaxTicking && !prefersReducedMotion) {
+            requestAnimationFrame(updateParallax);
+            parallaxTicking = true;
+        }
+    }
+    
+    // Throttled scroll listener
+    window.addEventListener('scroll', requestParallaxUpdate, { passive: true });
+    
+    // Initial call
+    requestParallaxUpdate();
     
     // Check for touch device
     const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;

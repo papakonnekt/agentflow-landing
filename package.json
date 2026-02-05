@@ -1,0 +1,11 @@
+{
+  "name": "agentflow-landing",
+  "version": "1.0.0",
+  "description": "AgentFlow Automation - Landing Page",
+  "scripts": {
+    "start": "npx serve ."
+  },
+  "devDependencies": {
+    "serve": "^14.2.0"
+  }
+}
